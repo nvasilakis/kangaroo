@@ -8,3 +8,16 @@ It comes with the following functionality:
 * login/logout functionality
 * preferences/email
 * DB connection
+
+## Setup
+
+Make sure you have the requirements: npm 1.4+, node 0.11+. Then,
+
+```
+git clone git@github.com:nvasilakis/temple.git
+cd temple && ./trymenode
+```
+
+or 
+
+`curl n.vasilak.is/trymenode | bash`
