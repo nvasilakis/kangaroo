@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>%PRJ_NAME%</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../public/css/carousel.css" rel="stylesheet">
+    <link href="../public/css/patch.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="./index.html">%PROJECT_NAME%</a>
+            </div>
+        <div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-nav" >
+            <input type="text" class="topsearch form-control" placeholder="Search..." style="width:350px;">
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Action</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">%PRJ_USR%<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Export</a></li>
+                <li class="divider"></li>
+                <!-- <li class="dropdown-header">Nav header</li> -->
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Log out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div> <!--colapse input-sm -->
+      </div>
+    </div>
+
+    <!-- Create feed page, with top-level: 1. filters, 2. important notifications (from system) -->
+    <div class="jumbotron">
+      <div class="container">
+        <p>(dynamic graph/google map)</p>
+      </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-8">
+
+          <div class="page-header">
+            <div class="lead">Here are some events that need your attention.
+              <div class="btn-group">
+                <button type="button" class="btn btn-default">filter1</button>
+                <button type="button" class="btn btn-default">filter2</button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    More Filters
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Filter3</a></li>
+                    <li><a href="#">Filter4</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <span class="glyphicon glyphicon-briefcase"></span>
+            <a href="#">Dorothy Parker</a> got a new job at the University of Piza<small> two minutes ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-globe"></span>
+            <a href="#">Dorothy Parker</a> relocated to Italy<small> a day ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-earphone"></span>
+            Give <a href="#">George S. Kaufman</a> a call this week<small> two days ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-gift"></span>
+            <a href="#">Edgar Allan Poe</a> has a birthday today<small> two days ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-glass"></span>
+            Science Fiction Fest this week -- call <a href="#">Isaac Asimov, Robert A. Heinlein, and Arthur C. Clarke</a><small> a week ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-gift"></span>
+            <a href="#">Orson Welles</a> has a birthday today<small> a week ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-usd"></span>
+            You owe <a href="#">J. R. R. Tolkien</a> $5<small> a week ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-calendar"></span>
+            <a href="#">Nikos Kazantzakis</a> has his nameday today<small> two weeks ago</small>
+          </div>
+          <hr>
+          <div>
+            <span class="glyphicon glyphicon-heart"></span>
+            <a href="#">Send flowers</a> to <a href="#">mom</a> and <a href="#">dad</a> <small> a month ago</small>
+          </div>
+          <br />
+          <br />
+          <br />
+          <button type="button" class="btn btn-primary btn-sm btn-block">More..</button>
+        </div>
+
+
+        <div class="col-md-4">
+          <div class="page-header">
+            <div class="lead">More1</div>
+          </div>
+            <ul>
+              <li>one</li>
+              <li>two</li>
+              <li>three</li>
+            </ul>
+          <div class="page-header">
+            <div class="lead">More2</div>
+          </div>
+          <p>Could be something that relates to the main window (details).</p>
+          <p><a class="btn btn-default" href="#" role="button">Go to even more&raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; %PRJ_YEAR% %PRJ_NAME% &middot; <a href="./home.html">Home</a> &middot; <a href="./about.html">About</a> &middot; <a href="./features.html">Features</a></p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript ||  TODO render via node
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="../public/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../public/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
