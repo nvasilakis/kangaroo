@@ -21,3 +21,10 @@ cd temple && ./trymenode
 or 
 
 `curl n.vasilak.is/trymenode | bash`
+
+## TODO
+
+* Fix script
+* html header (keywords, favicon etc.)
+* allow node to render headers, footers, menus
+* Add support for http://twitter.github.io/typeahead.js/examples/
