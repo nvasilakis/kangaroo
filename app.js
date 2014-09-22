@@ -1,10 +1,11 @@
-
-/**
- * Module dependencies.
- */
+// Dependencies
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var redis = require("redis"),
+    client = redis.createClient();
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
 // New application
 var app = express();
@@ -16,6 +17,12 @@ app.use('/static', express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/public/css'));
 
 // all environments | middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false, // don't create session until something stored
+    secret: 'shhhh, very secret'
+}));
 app.set('port', process.env.PORT || 2046);
 app.use(express.favicon());
 app.use(express.logger('dev'));

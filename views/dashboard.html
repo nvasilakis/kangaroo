@@ -1,38 +1,7 @@
 <% include header.html %>
   <body>
 
-    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-      <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="/">%PROJECT_NAME%</a>
-            </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-nav" >
-            <input type="text" class="topsearch form-control" placeholder="Search..." style="width:350px;">
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Action</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">%PRJ_USR%<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Export</a></li>
-                <li class="divider"></li>
-                <!-- <li class="dropdown-header">Nav header</li> -->
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Log out</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div> <!--colapse input-sm -->
-      </div>
-    </div>
+<% include navbar.html %>
 
     <!-- Create feed page, with top-level: 1. filters, 2. important notifications (from system) -->
     <div class="jumbotron">
@@ -136,9 +105,6 @@
 
       <hr>
 
-      <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; %PRJ_YEAR% %PRJ_NAME% &middot; <a href="/home">Home</a> &middot; <a href="/about">About</a> &middot; <a href="/features">Features</a></p>
-      </footer>
+<% include subfooter.html %>
     </div> <!-- /container -->
 <% include footer.html %>

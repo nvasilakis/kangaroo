@@ -18,6 +18,7 @@ module.exports = function (app) {
   app.get('/contact', bp.contact);
   app.get('/email/subscribe/:email/', bp.subscribe);
   app.get('/login', bp.login);
+  app.get('/logout', bp.logout);
   app.get('/register', bp.register);
   app.get('/dashboard', bp.dashboard);
   app.get('/edit', bp.edit);

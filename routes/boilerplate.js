@@ -37,13 +37,36 @@ function contact (req, res, next) {
 };
 
 function login (req, res, next) {
-  res.render('index', properties({css: "carousel"}));
+  console.log(req.body.username + " | " + req.body.password);
+  var authenticate = require('../lib/pass').auth;
+  authenticate(req.body.username, req.body.password, function(err, user){
+    res.render('dashboard', properties());
+  });
 };
+
+function logout (req, res, next) {
+  // destroy the user's session to log them out
+  // will be re-created next request
+  req.session.destroy(function(){
+    res.redirect('/');
+  });
+};
+
+// Send user to login
+function restrict(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Access denied!';
+    res.redirect('/login');
+  }
+}
 
 function register (req, res, next) {
   res.render('index', properties({css: "carousel"}));
 };
 
+// Need to pipe-in "restrict"
 function dashboard (req, res, next) {
   res.render('dashboard', properties());
 };
@@ -112,6 +135,7 @@ exports.about = about;
 exports.features = features;
 exports.contact = contact;
 exports.login = login;
+exports.logout = logout;
 exports.register = register;
 exports.add = newAdd;
 exports.settings = settings;

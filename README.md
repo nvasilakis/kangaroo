@@ -34,3 +34,4 @@ or
 * Hyperdex: http://hyperdex.org/doc/latest/
 * Simple JS stores: https://nodejsmodules.org/tags/key-value
 * MongoDB seems to pay back when dataset becomes huge (also: http://oldblog.antirez.com/post/MongoDB-and-Redis.html)
+* http://www.scotchmedia.com/tutorials/express/authentication/1/01
