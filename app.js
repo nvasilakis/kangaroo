@@ -10,6 +10,11 @@ var path = require('path');
 var app = express();
 app["pkg"] = require('./package.json');
 
+// Static Content (sequencing first, served by prod from ngingx)
+app.use(express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/css'));
+
 // all environments | middleware
 app.set('port', process.env.PORT || 2046);
 app.use(express.favicon());
@@ -24,16 +29,13 @@ app.use(app.router);
 var routes = require('./routes/routes')(app);
 
 /*
- * ## Content ##
+ * ## Views ##
  * Currently, all views are  static html pages (production-served via nginx)
  * utilizing ajax-based API through node
  */
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
-app.use(express.static(__dirname + '/public'));
-//app.use('/static', express.static(__dirname + '/public'));
-//app.use(express.static(__dirname + '/public/css'));
 
 
 // development only

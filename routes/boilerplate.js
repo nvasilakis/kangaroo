@@ -6,26 +6,87 @@ function error(status, msg) {
 
 var apiKeys = ['7b292b6a1f515410', '37fe7aa2ad307e82', '78d24c9447514608'];
 
-function index (req, res) {
+function index (req, res, next) {
   res.render('index', {
     title: "EJS example",
-    header: "Some users"
+    header: "Some users",
+    css: "cover"
   });
 };
 
-function login (req, res) {
-  res.render('index', {
+function about (req, res, next) {
+  res.render('about', {
     title: "EJS example",
-    header: "Some users"
+    header: "Some users",
+    css: "carousel"
   });
 };
 
-function register (req, res) {
-  res.render('index', {
+function features (req, res, next) {
+  res.render('features', {
     title: "EJS example",
-    header: "Some users"
+    header: "Some users",
+    css: "carousel"
   });
 };
+
+function contact (req, res, next) {
+  res.render('contact', {
+    title: "EJS example",
+    header: "Some users",
+    css: "carousel"
+  });
+};
+
+function login (req, res, next) {
+  res.render('index', {
+    title: "EJS example",
+    header: "Some users",
+    css: "carousel"
+  });
+};
+
+function register (req, res, next) {
+  res.render('index', {
+    title: "EJS example",
+    header: "Some users",
+    css: "carousel"
+  });
+};
+
+function dashboard (req, res, next) {
+  res.render('dashboard', {
+    title: "EJS example",
+    header: "Some users",
+    css: "patch"
+  });
+};
+
+function edit (req, res, next) {
+  res.render('edit', {
+    title: "EJS example",
+    header: "Some users",
+    css: "patch"
+  });
+};
+
+function settings (req, res, next) {
+  res.render('settings', {
+    title: "EJS example",
+    header: "Some users",
+    css: "patch"
+  });
+};
+
+
+function newAdd (req, res, next) {
+  res.render('new', {
+    title: "EJS example",
+    header: "Some users",
+    css: "patch"
+  });
+};
+
 
 function apiPre(req, res, next){
   var token = req.query['token'];
@@ -74,5 +135,12 @@ exports.subscribe = subscribe;
 exports.sendMail = sendMail;
 exports.apiPre = apiPre;
 exports.index = index;
+exports.about = about;
+exports.features = features;
+exports.contact = contact;
 exports.login = login;
 exports.register = register;
+exports.add = newAdd;
+exports.settings = settings;
+exports.edit = edit;
+exports.dashboard = dashboard;

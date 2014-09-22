@@ -12,9 +12,17 @@ var bp = require('./boilerplate');
  */
 module.exports = function (app) {
   app.get('/', bp.index);
+  app.get('/index', bp.index);
+  app.get('/about', bp.about);
+  app.get('/features', bp.features);
+  app.get('/contact', bp.contact);
   app.get('/email/subscribe/:email/', bp.subscribe);
   app.get('/login', bp.login);
   app.get('/register', bp.register);
+  app.get('/dashboard', bp.dashboard);
+  app.get('/edit', bp.edit);
+  app.get('/new', bp.add);
+  app.get('/settings', bp.settings);
 
   // TODO: custom error pages!
   // custom error middleware
