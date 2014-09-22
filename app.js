@@ -24,13 +24,17 @@ app.use(app.router);
 var routes = require('./routes/routes')(app);
 
 /*
- * ## Views ##
+ * ## Content ##
  * Currently, all views are  static html pages (production-served via nginx)
  * utilizing ajax-based API through node
  */
 app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'ejs');
+app.engine('html', require('ejs').__express);
+app.set('view engine', 'html');
+app.use(express.static(__dirname + '/public'));
+//app.use('/static', express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public/css'));
+
 
 // development only
 if ('development' == app.get('env')) {
