@@ -4,87 +4,60 @@ function error(status, msg) {
   return err;
 }
 
+function properties(obj) {
+  usr = undefined;
+  pkg = require('../package.json');
+  obj = obj || {};
+  o = { name: obj.name || pkg.name
+      , tagline: obj.tagline || pkg.tagline
+      , year: obj.year || pkg.year
+      , username: usr || "Guest"
+      , header: obj.header || "example"
+      , css: obj.css || "patch"
+      };
+  return o
+}
+
 var apiKeys = ['7b292b6a1f515410', '37fe7aa2ad307e82', '78d24c9447514608'];
 
 function index (req, res, next) {
-  res.render('index', {
-    title: "EJS example",
-    header: "Some users",
-    css: "cover"
-  });
+  res.render('index', properties({css: "cover"}));
 };
 
 function about (req, res, next) {
-  res.render('about', {
-    title: "EJS example",
-    header: "Some users",
-    css: "carousel"
-  });
+  res.render('about', properties({css: "carousel"}));
 };
 
 function features (req, res, next) {
-  res.render('features', {
-    title: "EJS example",
-    header: "Some users",
-    css: "carousel"
-  });
+  res.render('features', properties({css: "carousel"}));
 };
 
 function contact (req, res, next) {
-  res.render('contact', {
-    title: "EJS example",
-    header: "Some users",
-    css: "carousel"
-  });
+  res.render('contact', properties());
 };
 
 function login (req, res, next) {
-  res.render('index', {
-    title: "EJS example",
-    header: "Some users",
-    css: "carousel"
-  });
+  res.render('index', properties({css: "carousel"}));
 };
 
 function register (req, res, next) {
-  res.render('index', {
-    title: "EJS example",
-    header: "Some users",
-    css: "carousel"
-  });
+  res.render('index', properties({css: "carousel"}));
 };
 
 function dashboard (req, res, next) {
-  res.render('dashboard', {
-    title: "EJS example",
-    header: "Some users",
-    css: "patch"
-  });
+  res.render('dashboard', properties());
 };
 
 function edit (req, res, next) {
-  res.render('edit', {
-    title: "EJS example",
-    header: "Some users",
-    css: "patch"
-  });
+  res.render('edit', properties());
 };
 
 function settings (req, res, next) {
-  res.render('settings', {
-    title: "EJS example",
-    header: "Some users",
-    css: "patch"
-  });
+  res.render('settings', properties());
 };
 
-
 function newAdd (req, res, next) {
-  res.render('new', {
-    title: "EJS example",
-    header: "Some users",
-    css: "patch"
-  });
+  res.render('new', properties());
 };
 
 

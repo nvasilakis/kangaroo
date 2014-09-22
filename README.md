@@ -28,3 +28,9 @@ or
 * html header (keywords, favicon etc.)
 * allow node to render headers, footers, menus
 * Add support for http://twitter.github.io/typeahead.js/examples/
+
+## More
+* Key-Value stores http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis
+* Hyperdex: http://hyperdex.org/doc/latest/
+* Simple JS stores: https://nodejsmodules.org/tags/key-value
+* MongoDB seems to pay back when dataset becomes huge (also: http://oldblog.antirez.com/post/MongoDB-and-Redis.html)

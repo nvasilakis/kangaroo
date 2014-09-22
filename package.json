@@ -1,7 +1,8 @@
 {
-  "name": "kangaroo",
-  "tagline": "Jumpstart webapp development!",
+  "name": "Kangaroo",
+  "tagline": "Jumpstart Your Web Application Development!",
   "version": "0.0.1",
+  "year": "2015",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -10,6 +11,8 @@
     "express": "3.5.1",
     "should": "^3.3.0",
     "mocha": "^1.18.2",
-    "ejs": "^1.0.0"
+    "ejs": "^1.0.0",
+    "redis": "^0.12.1",
+    "crypto": "0.0.3"
   }
 }
