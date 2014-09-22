@@ -1,13 +1,13 @@
-temple
+Kangaroo
 ======
 
-a node template for quick scaffolding!
+A node template for quick scaffolding!
 
-It comes with the following functionality:
+It comes bundled with the following functionality:
 * visually-appealing template with menu/search/edit profile
-* login/logout functionality
+* register, login, logout functionality
 * preferences/email
-* DB connection
+* simple key-value DB connection
 
 ## Setup
 
