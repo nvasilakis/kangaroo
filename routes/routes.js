@@ -17,13 +17,13 @@ module.exports = function (app) {
   app.get('/features', bp.features);
   app.get('/contact', bp.contact);
   app.get('/email/subscribe/:email/', bp.subscribe);
-  app.get('/login', bp.login);
+  app.post('/login', bp.login);
   app.get('/logout', bp.logout);
   app.get('/register', bp.register);
-  app.get('/dashboard', bp.dashboard);
-  app.get('/edit', bp.edit);
-  app.get('/new', bp.add);
-  app.get('/settings', bp.settings);
+  app.get('/dashboard', bp.isUserLoggedIn, bp.dashboard);
+  app.get('/edit', bp.isUserLoggedIn, bp.edit);
+  app.get('/new', bp.isUserLoggedIn, bp.add);
+  app.get('/settings', bp.isUserLoggedIn, bp.settings);
 
   // TODO: custom error pages!
   // custom error middleware

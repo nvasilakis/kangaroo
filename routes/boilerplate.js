@@ -11,7 +11,9 @@ function properties(obj) {
   o = { name: obj.name || pkg.name
       , tagline: obj.tagline || pkg.tagline
       , year: obj.year || pkg.year
-      , username: usr || "Guest"
+      , username: obj.username || "Guest"
+      , navfix: obj.navfix || "static"
+      , nowrap: obj.nowrap || false  // reversed because of "falsy"
       , header: obj.header || "example"
       , css: obj.css || "patch"
       };
@@ -33,32 +35,69 @@ function features (req, res, next) {
 };
 
 function contact (req, res, next) {
-  res.render('contact', properties());
+  o = {css: "carousel", nowrap: true};
+  res.render('contact', properties(o));
 };
 
 function login (req, res, next) {
-  console.log(req.body.username + " | " + req.body.password);
-  var authenticate = require('../lib/pass').auth;
-  authenticate(req.body.username, req.body.password, function(err, user){
-    res.render('dashboard', properties());
-  });
+  console.log("Req: " + req.body.sign + " | " +  req.body.email + " | " + req.body.password);
+  //res.render('dashboard', properties());
+  if (req.body.sign == "in") {
+    var authUsr = require('../lib/db').authUsr;
+    authUsr(req.body.email, req.body.password, function(err, user){
+      if (user) {
+        console.log("Successful login " + user);
+        // Regenerate session when signing in
+        // to prevent fixation
+        req.session.regenerate(function(){
+          // Store the user's primary key
+          // in the session store to be retrieved,
+          // or in this case the entire user object
+          console.log(user);
+          req.session.user = user;
+          req.session.success = 'Authenticated as ' + user.name
+            + ' click to <a href="/logout">logout</a>. '
+            + ' You may now access <a href="/restricted">/restricted</a>.';
+          console.log("Creating session for " + req.session.user);
+          res.redirect('/dashboard');
+        });
+      } else {
+        console.log("failed login");
+        req.session.error = 'Authentication failed, please check your '
+          + ' username and password.'
+          + ' (use "tj" and "foobar")';
+        res.redirect('/again');
+      }
+    });
+  } else {
+    // TODO: Check validity! (client + server side)
+    var db = require("../lib/db")
+    db.addUser(req.body.email, req.body.password, function() {
+      console.log("Successful signup"); // TODO: error and result params???
+      req.session.regenerate(function(){
+        req.session.user = {email: req.body.email}
+        req.session.success = 'Authenticated as ' + user.name
+          + ' click to <a href="/logout">logout</a>. '
+          + ' You may now access <a href="/restricted">/restricted</a>.';
+        res.redirect('/dashboard?ut=n'); //usertype = new
+      });
+    });
+  };
 };
 
 function logout (req, res, next) {
-  // destroy the user's session to log them out
-  // will be re-created next request
   req.session.destroy(function(){
     res.redirect('/');
   });
 };
 
 // Send user to login
-function restrict(req, res, next) {
+function isUserLoggedIn(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    req.session.error = 'Access denied!';
-    res.redirect('/login');
+    req.session.error = 'Access denied!'; // TODO: Utilize session messaging!
+    res.redirect('/');
   }
 }
 
@@ -68,7 +107,8 @@ function register (req, res, next) {
 
 // Need to pipe-in "restrict"
 function dashboard (req, res, next) {
-  res.render('dashboard', properties());
+  console.log("Creating dashboard for " + req.session.user.email);
+  res.render('dashboard', properties({username: req.session.user.email}));
 };
 
 function edit (req, res, next) {
@@ -136,6 +176,7 @@ exports.features = features;
 exports.contact = contact;
 exports.login = login;
 exports.logout = logout;
+exports.isUserLoggedIn = isUserLoggedIn;
 exports.register = register;
 exports.add = newAdd;
 exports.settings = settings;
