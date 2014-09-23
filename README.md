@@ -24,9 +24,11 @@ or
 
 ## TODO
 
+* Need auth. email for bots
+* __Urgent__: need to change `email` to `id` wherever needed
 * Fix script
 * html header (keywords, favicon etc.)
-* allow node to render headers, footers, menus
+* ~~allow node to render headers, footers, menus~~ Done!
 * Add support for http://twitter.github.io/typeahead.js/examples/
 
 ## More

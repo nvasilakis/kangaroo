@@ -39,7 +39,17 @@ function contact (req, res, next) {
   res.render('contact', properties(o));
 };
 
-function login (req, res, next) {
+function glogin (req, res, next) {
+  o = {css: "carousel", nowrap: true};
+  res.render('login', properties(o));
+};
+
+function reset (req, res, next) {
+  o = {css: "carousel", nowrap: true};
+  res.render('reset', properties(o));
+};
+
+function plogin (req, res, next) {
   console.log("Req: " + req.body.sign + " | " +  req.body.email + " | " + req.body.password);
   //res.render('dashboard', properties());
   if (req.body.sign == "in") {
@@ -66,21 +76,31 @@ function login (req, res, next) {
         req.session.error = 'Authentication failed, please check your '
           + ' username and password.'
           + ' (use "tj" and "foobar")';
-        res.redirect('/again');
+        res.redirect('/login'); // TODO: Utilize messaging 
       }
     });
   } else {
     // TODO: Check validity! (client + server side)
     var db = require("../lib/db")
-    db.addUser(req.body.email, req.body.password, function() {
-      console.log("Successful signup"); // TODO: error and result params???
-      req.session.regenerate(function(){
-        req.session.user = {email: req.body.email}
-        req.session.success = 'Authenticated as ' + user.name
-          + ' click to <a href="/logout">logout</a>. '
-          + ' You may now access <a href="/restricted">/restricted</a>.';
-        res.redirect('/dashboard?ut=n'); //usertype = new
-      });
+    console.log("WTF")
+    db.usrExists(re.body.email, function(err, user) {
+      console.log("WTF")
+      if (user) {
+        console.log("user exists");
+        req.session.error = 'username already exists'
+        res.redirect('/index'); // TODO: Utilize messaging 
+      } else {
+        db.addUser(req.body.email, req.body.password, function() {
+          console.log("Successful signup"); // TODO: error and result params???
+          req.session.regenerate(function(){
+            req.session.user = {email: req.body.email}
+            req.session.success = 'Authenticated as ' + req.body.email
+              + ' click to <a href="/logout">logout</a>. '
+              + ' You may now access <a href="/restricted">/restricted</a>.';
+            res.redirect('/dashboard?ut=n'); //usertype = new
+          });
+        });
+      }
     });
   };
 };
@@ -107,20 +127,19 @@ function register (req, res, next) {
 
 // Need to pipe-in "restrict"
 function dashboard (req, res, next) {
-  console.log("Creating dashboard for " + req.session.user.email);
   res.render('dashboard', properties({username: req.session.user.email}));
 };
 
 function edit (req, res, next) {
-  res.render('edit', properties());
+  res.render('edit', properties({username: req.session.user.email}));
 };
 
 function settings (req, res, next) {
-  res.render('settings', properties());
+  res.render('settings', properties({username: req.session.user.email}));
 };
 
 function newAdd (req, res, next) {
-  res.render('new', properties());
+  res.render('new', properties({username: req.session.user.email}));
 };
 
 
@@ -174,7 +193,9 @@ exports.index = index;
 exports.about = about;
 exports.features = features;
 exports.contact = contact;
-exports.login = login;
+exports.plogin = plogin;
+exports.glogin = glogin;
+exports.reset = reset;
 exports.logout = logout;
 exports.isUserLoggedIn = isUserLoggedIn;
 exports.register = register;
