@@ -16,6 +16,10 @@
       <div class="row">
         <div class="col-md-8">
 
+        <% for (i = 0; i < messages.length; i++) { %>
+            <div class="alert alert-<%= messages[i].type %> alert-dismissible" role="alert"><%- messages[i].content %></div>
+        <% } %>
+
           <div class="page-header">
             <div class="lead">Here are some events that need your attention.
               <div class="btn-group">

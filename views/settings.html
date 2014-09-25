@@ -14,12 +14,12 @@
             <h2>Settings</h2>
           <hr>
             <ul class="nav nav-pills nav-stacked ">
-              <li class="active"><a href="#">Profile</a></li>
-              <li><a href="#">Account Settings</a></li>
-              <li><a href="#">Notification Center</a></li>
-              <li><a href="#">Billing</a></li>
-              <li><a href="#">Security/Privacy</a></li>
-              <li><a href="#">Connected Apps</a></li>
+              <li class="<%= (stype === 'profile' ? 'active' : '') %>"><a href="/settings/profile">Profile</a></li>
+              <li class="<%= (stype === 'account' ? 'active' : '') %>"><a href="/settings/account">Account Settings</a></li>
+              <li class="<%= (stype === 'notifications' ? 'active' : '') %>"><a href="/settings/notifications">Notification Center</a></li>
+              <!-- <li class="<%= (stype === 'billing' ? 'active' : '') %>"><a href="/settings/billing">Billing</a></li> -->
+              <li class="<%= (stype === 'security' ? 'active' : '') %>"><a href="/settings/security">Security/Privacy</a></li>
+              <!-- <li class="<%= (stype === 'apps' ? 'active' : '') %>"><a href="/settings/apps">Connected Apps</a></li> -->
             </ul>
           <hr>
             <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-cloud-upload"></span> Upload Batch</button>
@@ -30,6 +30,10 @@
 
         <div class="col-md-5">
 
+<% 
+    switch (stype) {
+      case "profile":
+%>
           <form role="form" class="form-inline">
             <div class="form-group">
               <label for="picture">Profile Picture</label>
@@ -64,7 +68,11 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
 
-<!-- Account
+<!-- Account -->
+<%
+        break;
+      case "account":
+%>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Change Password</h3>
@@ -117,8 +125,13 @@
             </form>
           </div>
         </div>
--->
-<!-- Notification Center
+
+<!-- Notification Center -->
+<%
+        break;
+      case "notifications":
+%>
+
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Notifications</h3>
@@ -163,8 +176,12 @@
               </form>
             </div>
           </div>
--->
-<!-- security
+
+<!-- security -->
+<%
+        break;
+      case "security":
+%>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Security Log</h3>
@@ -199,9 +216,9 @@
               </table>
             </div>
           </div>
--->
-
-
+<%
+  }
+%>
 
         </div>
       </div>

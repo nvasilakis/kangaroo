@@ -25,7 +25,12 @@ module.exports = function (app) {
   app.get('/dashboard', bp.isUserLoggedIn, bp.dashboard);
   app.get('/edit', bp.isUserLoggedIn, bp.edit);
   app.get('/new', bp.isUserLoggedIn, bp.add);
-  app.get('/settings', bp.isUserLoggedIn, bp.settings);
+
+  app.get('/settings', bp.isUserLoggedIn, bp.profile);
+  app.get('/settings/profile', bp.isUserLoggedIn, bp.profile);
+  app.get('/settings/account', bp.isUserLoggedIn, bp.account);
+  app.get('/settings/notifications', bp.isUserLoggedIn, bp.notifications);
+  app.get('/settings/security', bp.isUserLoggedIn, bp.security);
 
   // TODO: custom error pages!
   // custom error middleware

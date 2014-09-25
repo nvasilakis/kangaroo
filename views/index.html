@@ -24,6 +24,10 @@
               <button type="submit" name="sign" value="up" class="btn btn-success">Sign up</button>
               <button type="submit" name="sign" value="in" class="btn btn-default">Sign in</button>
             </form>
+        <% if (messages.length == 1) { %>
+            <br/> <br/>
+            <div class="alert alert-<%= messages[0].type %> alert-dismissible" role="alert"><%= messages[0].content %></div>
+        <% } %>
           </div>
 
           <div class="mastfoot">
