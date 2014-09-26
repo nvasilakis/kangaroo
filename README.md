@@ -24,6 +24,7 @@ or
 
 ## TODO
 
+* bring variables to local scope 
 * Need auth. email for bots
 * __Urgent__: need to change `email` to `id` wherever needed
 * Fix script
@@ -37,3 +38,4 @@ or
 * Simple JS stores: https://nodejsmodules.org/tags/key-value
 * MongoDB seems to pay back when dataset becomes huge (also: http://oldblog.antirez.com/post/MongoDB-and-Redis.html)
 * http://www.scotchmedia.com/tutorials/express/authentication/1/01
+

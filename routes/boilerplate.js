@@ -1,9 +1,11 @@
+var db = require('../lib/db');
 function error(status, msg) {
   var err = new Error(msg);
   err.status = status;
   return err;
 }
 
+// Need to make this actually concatenate wanted properties
 function properties(obj) {
   usr = undefined;
   pkg = require('../package.json');
@@ -17,6 +19,7 @@ function properties(obj) {
       , header: obj.header || "example"
       , stype: obj.stype || "profile"
       , messages: obj.messages || [] // an array of messages
+      , data: obj.data || {}
       , css: obj.css || "patch"
       };
   return o
@@ -58,8 +61,7 @@ function plogin (req, res, next) {
   console.log("Req: " + req.body.sign + " | " +  req.body.email + " | " + req.body.password);
   //res.render('dashboard', properties());
   if (req.body.sign == "in") {
-    var authUsr = require('../lib/db').authUsr;
-    authUsr(req.body.email, req.body.password, function(err, user){
+    db.authUsr(req.body.email, req.body.password, function(err, user){
       if (user) {
         console.log("Successful login " + user.email);
         console.log("is user verified? " + user.verified);
@@ -87,7 +89,6 @@ function plogin (req, res, next) {
     });
   } else {
     // TODO: Check validity! (client + server side)
-    var db = require("../lib/db")
     db.usrExists(req.body.email, function(err, user) {
       if (user) {
         console.log("user exists");
@@ -149,10 +150,28 @@ function edit (req, res, next) {
 
 function profile (req, res, next) {
   // issue DB Request
-  console.log("Trying to go for profile")
-  o = { css: "carousel", nowrap: true, messages: req.session.messages
-      , username: req.session.user.email, stype: "profile"};
-  res.render('settings', properties(o));
+  console.log("=> 1");
+  db.getProfile(req.session.user.email, function(e, r) {
+    if (e) {
+      msg = [{role: "alert", type: "danger", content: "There was an error with the request: (" + e +")" }]
+      o = { css: "carousel", nowrap: true, messages: msg
+          , username: req.session.user.email, stype: "profile"
+          , data: {pemail: "", name: "", locn: "", social: "", url: ""}};
+    }
+    if (r) {
+      console.log(r);
+      o = { css: "carousel", nowrap: true, messages: req.session.messages
+          , username: req.session.user.email, stype: "profile"
+          , data: JSON.parse(r)};
+    } else {
+      console.log(e)
+      msg = [{role: "alert", type: "danger", content: "There was an error with the request: (" + e +")" }]
+      o = { css: "carousel", nowrap: true, messages: msg
+          , username: req.session.user.email, stype: "profile"
+          , data: {pemail: "", name: "", locn: "", social: "", url: ""}};
+    }
+    res.render('settings', properties(o));
+  });
 };
 
 function account (req, res, next) {
@@ -168,6 +187,72 @@ function notifications (req, res, next) {
 };
 
 function security (req, res, next) {
+  o = { css: "carousel", nowrap: true, messages: req.session.messages
+      , username: req.session.user.email, stype: "security"};
+  res.render('settings', properties(o));
+};
+
+function pprofile (req, res, next) {
+  data = { name: req.body.name || ""
+         , pemail: req.body.email || ""
+         , url: req.body.url || ""
+         , social: req.body.social || ""
+         , locn: req.body.locn || "" }
+  db.setProfile(req.session.user.email, data, function (e) {
+    console.log("data: "+JSON.stringify(data));
+    if (e) {
+      msg = [{role: "alert", type: "danger", content: "There was an error with the request: (" + e +")" }]
+    } else {
+      msg = [{role: "alert", type: "info", content: "Your profile settings have been saved"}]
+    }
+    o = { css: "carousel", nowrap: true, messages: msg
+      , username: req.session.user.email, stype: "profile", data: data};
+    res.render('settings', properties(o));
+  });
+};
+
+function paccount (req, res, next) {
+  console.log("Account post: " + req.body.submit)
+  switch (req.body.submit) {
+  case "password":
+    if (req.body.newpassword1 == req.body.newpassword2) {
+      console.log("--> " + req.body.newpassword1);
+      db.setPswd(req.session.user.email, req.body.oldpassword, req.body.newpassword1, function(e) {
+        if (e) {
+            msg = [{role: "alert", type: "danger", content: e}]
+        } else {
+          msg = [{role: "alert", type: "info", content: "Your profile settings have been saved"}]
+        }
+          o = { css: "carousel", nowrap: true, messages: msg
+              , username: req.session.user.email, stype: "account" };
+          res.render('settings', properties(o));
+      });
+    } else {
+      msg = [{role: "alert", type: "danger", content: "Passwords do not match!"}]
+      o = { css: "carousel", nowrap: true, messages: msg
+          , username: req.session.user.email, stype: "account" };
+      res.render('settings', properties(o));
+    }
+    break;
+  case "delete":
+    res.render('settings', properties(o));
+    break;
+  case "login":
+    res.render('settings', properties(o));
+    break;
+  }
+    
+};
+
+function pnotifications (req, res, next) {
+  msg = [{role: "alert", type: "info", content: "Your notification settings are saved"}]
+  o = { css: "carousel", nowrap: true, messages: req.session.messages
+      , username: req.session.user.email, stype: "notifications"};
+  res.render('settings', properties(o));
+};
+
+function psecurity (req, res, next) {
+  msg = [{role: "alert", type: "info", content: "Your profile settings are saved"}]
   o = { css: "carousel", nowrap: true, messages: req.session.messages
       , username: req.session.user.email, stype: "security"};
   res.render('settings', properties(o));
@@ -243,3 +328,7 @@ exports.profile = profile;
 exports.account = account;
 exports.notifications = notifications;
 exports.security = security;
+exports.pprofile = pprofile;
+exports.paccount = paccount;
+exports.pnotifications = pnotifications;
+exports.psecurity = psecurity;

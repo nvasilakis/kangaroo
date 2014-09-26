@@ -6,9 +6,13 @@
  */
 var db = require("../lib/db")
 
+var kl = process.kill;
+var id = function () {};
+
 function populate() {
   console.log("Generating admin account");
-  db.addUser("admin@localhost", "1q2w3e4r", process.kill); //TODO: Add to local config file
+  db.addUser("admin@localhost", "1q2w3e4r", id); //TODO: Add to local config file
+  db.addUser("o", "o", id)
 };
 
 if (process.argv.length > 2 && process.argv[2].indexOf("force") > -1) {
