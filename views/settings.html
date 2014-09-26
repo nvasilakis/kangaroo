@@ -139,15 +139,16 @@
               </div>
               <div class="modal-body">
                 <p>
-                  Deleting your account cannot be undone.
-
-                  Type DELETE in the following field to verify you're serious about it!
+                  Deleting your account <i>cannot be undone</i>.  Type DELETE below to verify you're serious about it!
                 </p>
-                <input type="text" id="verif" class="form-control" name="verif">
+                <input type="text" id="verif" class="form-control" name="verif" autocomplete="off"/>
+                <br />
+                <p id="delReply">
+                </p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" name="submit" value="delete" disabled="disabled" class="btn btn-danger">Delete Account</button>
+                <button type="submit" id="delSubmit" name="submit" value="delete" disabled="disabled" class="btn btn-danger">Delete Account</button>
               </div>
             </div>
             </form>

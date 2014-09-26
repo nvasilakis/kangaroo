@@ -20,6 +20,7 @@ function properties(obj) {
       , stype: obj.stype || "profile"
       , messages: obj.messages || [] // an array of messages
       , data: obj.data || {}
+      , redirect: obj.redirect || ""
       , css: obj.css || "patch"
       };
   return o
@@ -28,8 +29,9 @@ function properties(obj) {
 var apiKeys = ['7b292b6a1f515410', '37fe7aa2ad307e82', '78d24c9447514608'];
 
 function index (req, res, next) {
-  o = {css: "cover", messages: req.session.messages}
+  o = {css: "cover", messages: req.session.messages, redirect: req.query.o}
   res.render('index', properties(o));
+  
 };
 
 function about (req, res, next) {
@@ -59,6 +61,7 @@ function reset (req, res, next) {
 
 function plogin (req, res, next) {
   console.log("Req: " + req.body.sign + " | " +  req.body.email + " | " + req.body.password);
+  console.log("REDIRECT: " + req.query.o)
   //res.render('dashboard', properties());
   if (req.body.sign == "in") {
     db.authUsr(req.body.email, req.body.password, function(err, user){
@@ -76,9 +79,15 @@ function plogin (req, res, next) {
             req.session.messages = [{role: "alert", type: "warning", 
               content: "Your email address is not verified! <a href='#'>Resend email</a>"}]
           }
-          console.log("Creating session for " + req.session.user);
-          console.log("o = " + req.query.o);
-          res.redirect('/dashboard');
+
+          console.log("Creating session for " + req.session.user); // TODO: Add name
+
+          console.log("o = " + req.body.redirect);
+          if (req.body.redirect) {
+            res.redirect(decodeURIComponent(req.body.redirect));
+          } else {
+            res.redirect('/dashboard');
+          }
         });
       } else {
         console.log("failed login");
@@ -99,11 +108,11 @@ function plogin (req, res, next) {
         db.addUser(req.body.email, req.body.password, function() {
           console.log("Successful signup"); // TODO: error and result params???
           req.session.regenerate(function(){
-            req.session.user = {email: req.body.email}
-            req.session.messages = [{role: "alert", type: "warning", 
-              content: "Your email address (" + req.body.email + ") is not verified! Check your inbox (or <a href='#'>resend email</a>)."}]
+            req.session.user = {email: req.body.email} //TODO: Add usename!
             req.session.messages = req.session.messages.concat( [{role: "alert", type: "info", 
               content: ("Pssst! Since it's your first time around, you might want to follow <a href=#>the tutorial</a> or <a href=#>import your contacts</a>!") }])
+            req.session.messages = [{role: "alert", type: "warning", 
+              content: "Your email address (" + req.body.email + ") is not verified! Check your inbox (or <a href='#'>resend email</a>)."}]
             res.redirect('/dashboard');
           });
         });
@@ -115,7 +124,7 @@ function plogin (req, res, next) {
 function logout (req, res, next) {
   req.session.destroy(function(){
     res.redirect('/');
-  });
+  }); 
 };
 
 // Send user to login
@@ -235,7 +244,20 @@ function paccount (req, res, next) {
     }
     break;
   case "delete":
-    res.render('settings', properties(o));
+    if (req.body.verif == "DELETE") {
+      db.delUser(req.session.user.email, function(e) {
+        //msg = [{role: "alert", type: "info", content: "We are still going to miss you " + req.session.user.email + ", and hope to see you back again!"}]
+        //o = {css: "cover", messages: msg}
+        req.session.destroy(function(){
+          res.redirect('/');
+        });
+      });
+    } else {
+      msg = []
+      o = { css: "carousel", nowrap: true, messages: msg
+          , username: req.session.user.email, stype: "notifications"};
+      res.render('/settings/account', properties(o));
+    }
     break;
   case "login":
     res.render('settings', properties(o));
@@ -244,12 +266,36 @@ function paccount (req, res, next) {
     
 };
 
+// This is going to be Ajax-based
+function sendverify (req, res, next) {
+  var nm = "Nikos"
+  var em = "nikos.ailo@gmail.com"
+  var email = require('../lib/email')
+  email.sendVerification(nm, em, function(e, i){
+    if (e) {
+      console.log("Error sending email to " + nm + "<" + em + ">");
+      res.json({result: "error", details: e})
+    } else {
+      console.log('Message sent: ' + i.response);
+      res.json({result: "success", details: i.response})
+    }
+  });
+};
+
+function verify (req, res, next) {
+  msg = [{role: "alert", type: "info", content: "Your notification settings are saved"}]
+  o = { css: "carousel", nowrap: true, messages: req.session.messages
+      , username: req.session.user.email, stype: "notifications"};
+  res.render('settings', properties(o));
+};
+
 function pnotifications (req, res, next) {
   msg = [{role: "alert", type: "info", content: "Your notification settings are saved"}]
   o = { css: "carousel", nowrap: true, messages: req.session.messages
       , username: req.session.user.email, stype: "notifications"};
   res.render('settings', properties(o));
 };
+
 
 function psecurity (req, res, next) {
   msg = [{role: "alert", type: "info", content: "Your profile settings are saved"}]
@@ -332,3 +378,6 @@ exports.pprofile = pprofile;
 exports.paccount = paccount;
 exports.pnotifications = pnotifications;
 exports.psecurity = psecurity;
+
+exports.verify = verify
+exports.sendverify = sendverify

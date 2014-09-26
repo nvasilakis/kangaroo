@@ -21,6 +21,7 @@
             <form class="form-inline" role="form" action="/login" method="post">
               <input type="text" class="form-control" name="email"     placeholder="Your email" autofocus="autofocus">
               <input type="password" class="form-control" name="password" placeholder="Create a password">
+              <input type="hidden"  name="redirect" value="<%= redirect %>">
               <button type="submit" name="sign" value="up" class="btn btn-success">Sign up</button>
               <button type="submit" name="sign" value="in" class="btn btn-default">Sign in</button>
             </form>

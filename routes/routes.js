@@ -37,6 +37,9 @@ module.exports = function (app) {
   app.post('/settings/notifications', bp.isUserLoggedIn, bp.pnotifications);
   app.post('/settings/security', bp.isUserLoggedIn, bp.psecurity);
 
+  app.get('/verify', bp.isUserLoggedIn, bp.verify);
+  app.get('/sendverify', bp.isUserLoggedIn, bp.sendverify);
+
   // TODO: custom error pages!
   // custom error middleware
   app.use(function(err, req, res, next){
