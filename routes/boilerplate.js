@@ -11,7 +11,7 @@ function properties(obj) {
   pkg = require('../package.json');
   obj = obj || {};
   o = { name: obj.name || pkg.name
-      , tagline: obj.tagline || pkg.tagline
+      , tagline: obj.tagline || pkg.description
       , year: obj.year || pkg.year
       , username: obj.username || "Guest"
       , navfix: obj.navfix || "static"
@@ -268,8 +268,8 @@ function paccount (req, res, next) {
 
 // This is going to be Ajax-based
 function sendverify (req, res, next) {
-  var nm = "Nikos"
-  var em = "nikos.ailo@gmail.com"
+  var nm = req.user.name
+  var em = req.user.email
   var email = require('../lib/email')
   email.sendVerification(nm, em, function(e, i){
     if (e) {

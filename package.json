@@ -1,11 +1,17 @@
 {
   "name": "Kangaroo",
-  "tagline": "Jumpstart Your Web Application Development!",
   "version": "0.0.1",
+  "description": "Jumpstart Your Web Application Development!",
   "year": "2015",
   "private": true,
+  "homepage": "kangaroo.vasilak.is",
   "scripts": {
     "start": "node app.js"
+  },
+  "author": {
+    "name": "Nikos Vasilakis",
+    "email": "nikos@vasilak.is",
+    "url": "nikos.vasilak.is"
   },
   "dependencies": {
     "body-parser": "^1.8.3",
