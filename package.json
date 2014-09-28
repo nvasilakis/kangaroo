@@ -1,7 +1,8 @@
 {
   "name": "Kangaroo",
+  "tagline": "A node.js template application for quick scaffolding!",
   "version": "0.0.1",
-  "description": "Jumpstart Your Web Application Development!",
+  "description": "A node.js template application for quick scaffolding!",
   "year": "2015",
   "private": true,
   "homepage": "kangaroo.vasilak.is",
