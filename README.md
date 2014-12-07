@@ -55,6 +55,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 ## TODO
+
+#### Index page
+* [gitbook](https://www.gitbook.com/)
+
 #### (notes et al.)
 
 * bring variables to local scope 
