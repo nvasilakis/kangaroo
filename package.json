@@ -1,20 +1,29 @@
 {
   "name": "Kangaroo",
-  "tagline": "Jumpstart Your Web Application Development!",
+  "tagline": "A node.js template application for quick scaffolding!",
   "version": "0.0.1",
+  "description": "A node.js template application for quick scaffolding!",
   "year": "2015",
   "private": true,
+  "homepage": "kangaroo.vasilak.is",
   "scripts": {
     "start": "node app.js"
   },
+  "author": {
+    "name": "Nikos Vasilakis",
+    "email": "nikos@vasilak.is",
+    "url": "nikos.vasilak.is"
+  },
   "dependencies": {
-    "express": "3.5.1",
-    "should": "^3.3.0",
-    "mocha": "^1.18.2",
-    "ejs": "^1.0.0",
-    "redis": "^0.12.1",
-    "crypto": "0.0.3",
     "body-parser": "^1.8.3",
-    "express-session": "^1.8.2"
+    "crypto": "0.0.3",
+    "ejs": "^1.0.0",
+    "express": "3.5.1",
+    "express-session": "^1.8.2",
+    "mocha": "^1.18.2",
+    "moment": "^2.8.3",
+    "nodemailer": "^1.3.0",
+    "redis": "^0.12.1",
+    "should": "^3.3.0"
   }
 }

@@ -14,12 +14,12 @@
             <h2>Settings</h2>
           <hr>
             <ul class="nav nav-pills nav-stacked ">
-              <li class="active"><a href="#">Profile</a></li>
-              <li><a href="#">Account Settings</a></li>
-              <li><a href="#">Notification Center</a></li>
-              <li><a href="#">Billing</a></li>
-              <li><a href="#">Security/Privacy</a></li>
-              <li><a href="#">Connected Apps</a></li>
+              <li class="<%= (stype === 'profile' ? 'active' : '') %>"><a href="/settings/profile">Profile</a></li>
+              <li class="<%= (stype === 'account' ? 'active' : '') %>"><a href="/settings/account">Account Settings</a></li>
+              <li class="<%= (stype === 'notifications' ? 'active' : '') %>"><a href="/settings/notifications">Notification Center</a></li>
+              <!-- <li class="<%= (stype === 'billing' ? 'active' : '') %>"><a href="/settings/billing">Billing</a></li> -->
+              <li class="<%= (stype === 'security' ? 'active' : '') %>"><a href="/settings/security">Security/Privacy</a></li>
+              <!-- <li class="<%= (stype === 'apps' ? 'active' : '') %>"><a href="/settings/apps">Connected Apps</a></li> -->
             </ul>
           <hr>
             <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-cloud-upload"></span> Upload Batch</button>
@@ -30,7 +30,12 @@
 
         <div class="col-md-5">
 
-          <form role="form" class="form-inline">
+          <% include messages.html %>
+<% 
+    switch (stype) {
+      case "profile":
+%>
+          <form class="form" role="form" action="/settings/profile_picture" method="post">
             <div class="form-group">
               <label for="picture">Profile Picture</label>
               <br>
@@ -39,51 +44,55 @@
             </div>
           </form>
 
-          <form role="form">
+          <form class="form" role="form" action="/settings/profile" method="post">
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" value="Nikos Vasilakis">
+              <input type="text" class="form-control" id="name" name="name" value="<%= data.name %>">
             </div>
             <div class="form-group">
-              <label for="email">Email (public)</label>
-              <input type="email" class="form-control" id="email" value="nikos@vasilak.is">
+              <label for="pemail">Email (public)</label>
+              <input type="pemail" class="form-control" id="pemail" name="pemail" value="<%= data.pemail %>">
             </div>
             <div class="form-group">
               <label for="url">URL</label>
-              <input type="text" class="form-control" id="url" value="nikos.vasilak.is">
+              <input type="text" class="form-control" id="url" name="url" value="<%= data.url %>" placeholder="www.mysite.com">
             </div>
             <div class="form-group">
               <label for="social">Social Networks</label>
-              <input type="text" class="form-control" id="social" value="twitter.com/nv, github.com/nv">
+              <input type="text" class="form-control" id="social" name="social" value="<%= data.social %>" placeholder="twitter.com/be, be.tumblr.com">
               <p class="help-block">Just separate addresses with commas; we'll take care of the rest. </p>
             </div>
             <div class="form-group">
-              <label for="location">Location</label>
-              <input type="text" class="form-control" id="location" value="Philadelphia, PA">
+              <label for="locn">Current Location</label>
+              <input type="text" class="form-control" id="locn" name="locn" value="<%= data.locn %>">
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
 
-<!-- Account
+<!-- Account -->
+<%
+        break;
+      case "account":
+%>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Change Password</h3>
             </div>
             <div class="panel-body">
-              <form role="form">
+              <form class="form" role="form" action="/settings/account" method="post">
                 <div class="form-group">
                   <label for="oldpassword">Old Password</label>
-                  <input type="password" class="form-control" id="oldpassword">
+                  <input type="password" class="form-control" id="oldpassword" name="oldpassword">
                 </div>
                 <div class="form-group">
-                  <label for="newpassword0">New Password</label>
-                  <input type="password" class="form-control" id="newpassword0">
+                  <label for="newpassword1">New Password</label>
+                  <input type="password" class="form-control" id="newpassword1" name="newpassword1">
                 </div>
                 <div class="form-group">
-                  <label for="password1">Confirm New Password</label>
-                  <input type="password" class="form-control" id="newpassword1">
+                  <label for="password2">Confirm New Password</label>
+                  <input type="password" class="form-control" id="newpassword2" name="newpassword2">
                 </div>
-                <button type="submit" class="btn btn-default">Update Password</button>
+                <button type="submit" name="submit" value="password" class="btn btn-default">Update Password</button>
               </form>
             </div>
           </div>
@@ -96,9 +105,9 @@
               <form role="form">
                 <div class="form-group">
                   <label for="email">Change Login Email</label>
-                  <input type="text" class="form-control" id="email" value="nikos@vasilak.is">
+                  <input type="text" class="form-control" id="email" value="<%= username %>">
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" name="submit" value="login" class="btn btn-default">Submit</button>
               </form>
             </div>
           </div>
@@ -108,17 +117,50 @@
               <h3 class="panel-title">Delete Account</h3>
             </div>
             <div class="panel-body">
-            <form role="form">
+            <div role="form">
               <div class="form-group">
                 <label for="email">Delete Account</label>
                 <p class="help-block">Before doing anything crazy, make sure you <a href="#">check</a> or <a href="#">export</a> your data! <i>This cannot be undone.</i></p>
               </div>
-              <button type="submit" class="btn btn-danger">Delete</button>
+              <button class="btn btn-primary btn-danger" data-toggle="modal" data-target="#myModal"> Delete </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form class="form" role="form" action="/settings/account" method="post">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Really delete it?</h4>
+              </div>
+              <div class="modal-body">
+                <p>
+                  Deleting your account <i>cannot be undone</i>.  Type DELETE below to verify you're serious about it!
+                </p>
+                <input type="text" id="verif" class="form-control" name="verif" autocomplete="off"/>
+                <br />
+                <p id="delReply">
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" id="delSubmit" name="submit" value="delete" disabled="disabled" class="btn btn-danger">Delete Account</button>
+              </div>
+            </div>
             </form>
           </div>
         </div>
--->
-<!-- Notification Center
+
+<!-- Notification Center -->
+<%
+        break;
+      case "notifications":
+%>
+
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Notifications</h3>
@@ -163,8 +205,12 @@
               </form>
             </div>
           </div>
--->
-<!-- security
+
+<!-- security -->
+<%
+        break;
+      case "security":
+%>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Security Log</h3>
@@ -199,9 +245,9 @@
               </table>
             </div>
           </div>
--->
-
-
+<%
+  }
+%>
 
         </div>
       </div>
