@@ -56,7 +56,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## TODO
 
-<<<<<<< HEAD
 =======
 #### Index page
 * [gitbook](https://www.gitbook.com/)
@@ -64,7 +63,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #### (notes et al.)
 
 * bring variables to local scope 
->>>>>>> bcef5d7e4db4d390efbc2ebe75ac35f6d1f023b6
 * Need auth. email for bots
 * __Urgent__: need to change `email` to `id` wherever needed
 * Fix script
