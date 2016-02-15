@@ -19,22 +19,19 @@
             <h1 class="cover-heading"><%= name %></h1>
             <p><%= tagline %></p>
             <form class="form-inline" role="form" action="/login" method="post">
-              <input type="text" class="form-control" type="text"     placeholder="Your email" autofocus="autofocus">
-              <input type="password" class="form-control" type="password" placeholder="Create a password">
-              <button type="submit" class="btn btn-success">Sign up</button>
-              <button type="submit" class="btn btn-default">Sign in</button>
+              <input type="text" class="form-control" name="email"     placeholder="Your email" autofocus="autofocus">
+              <input type="password" class="form-control" name="password" placeholder="Create a password">
+              <button type="submit" name="sign" value="up" class="btn btn-success">Sign up</button>
+              <button type="submit" name="sign" value="in" class="btn btn-default">Sign in</button>
             </form>
           </div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p> &copy; %PRJ_YEAR% %PRJ_NAME% &middot; <a href="/about">About</a> &middot; <a href="/features">Features</a> &middot; <a href="/contact">Contact</a>.</p>
+              <p> &copy; <%= year %> <%= name %> &middot; <a href="/about">About</a> &middot; <a href="/features">Features</a> &middot; <a href="/contact">Contact</a></p>
             </div>
           </div>
-
         </div>
-
       </div>
-
     </div>
 <% include footer.html %>
