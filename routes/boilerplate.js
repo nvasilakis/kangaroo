@@ -108,12 +108,12 @@ function plogin (req, res, next) {
         db.addUser(req.body.email, req.body.password, function() {
           console.log("Successful signup"); // TODO: error and result params???
           req.session.regenerate(function(){
-            req.session.user = {email: req.body.email} //TODO: Add usename!
-            req.session.messages = req.session.messages.concat( [{role: "alert", type: "info", 
-              content: ("Pssst! Since it's your first time around, you might want to follow <a href=#>the tutorial</a> or <a href=#>import your contacts</a>!") }])
-            req.session.messages = [{role: "alert", type: "warning", 
-              content: "Your email address (" + req.body.email + ") is not verified! Check your inbox (or <a href='#'>resend email</a>)."}]
-            res.redirect('/dashboard');
+             req.session.user = {email: req.body.email} //TODO: Add usename!
+             req.session.messages =  [{role: "alert", type: "info",
+               content: ("Pssst! Since it's your first time around, you might want to follow <a href=#>the tutorial</a> or <a href=#>import your contacts</a>!") }]
+             req.session.messages = req.session.messages.concat([{role: "alert", type: "warning",
+               content: "Your email address (" + req.body.email + ") is not verified! Check your inbox (or <a href='#'>resend email</a>)."}])
+             res.redirect('/dashboard');
           });
         });
       }

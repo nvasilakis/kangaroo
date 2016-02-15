@@ -64,6 +64,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * html header (keywords, favicon etc.)
 * ~~allow node to render headers, footers, menus~~ Done!
 * Add support for http://twitter.github.io/typeahead.js/examples/
+* notification text `We sent a verification email to nikos@vasilak.is.  Please follow the instructions in it.`
+* prep i18n strings
 
 #### More
 * Key-Value stores http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis
